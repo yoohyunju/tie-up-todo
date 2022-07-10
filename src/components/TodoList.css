@@ -1,0 +1,34 @@
+.todo-list {
+  width: 90vw;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* check box icon */
+.content svg {
+  font-size: 1.5rem;
+  color: rgb(40, 44, 122);
+}
+
+.content .text {
+  margin-left: 0.5rem;
+  flex: 1;
+}
+
+.content.checked .text {
+  color: #515A98;
+  text-decoration: line-through;
+  cursor: pointer;
+  opacity: 0.6;
+}
