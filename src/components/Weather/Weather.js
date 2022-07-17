@@ -11,6 +11,7 @@ const Weather = () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
     //console.log(lon, lat, url)
 
+    // TODO 몇 분에 한 번씩만 가져오기로 바꿔야함..
     axios.get(url).then(responseData =>{
       const data = responseData.data;
       setWeather({

@@ -3,7 +3,7 @@ import { MdAddCircle } from "react-icons/md";
 import { TiTrash, TiPencil } from "react-icons/ti";
 import "./TodoInsert.css";
 
-const TodoIntsert = ({ onInsertToggle, onInsertTodo, selectedTodo, onRemove, onUpdate}) => {
+const TodoInsert = ({ onInsertToggle, onInsertTodo, selectedTodo, onRemove, onUpdate}) => {
   const [value, setValue] = useState("");
 
   const onChange = (e) => {
@@ -51,4 +51,4 @@ const TodoIntsert = ({ onInsertToggle, onInsertTodo, selectedTodo, onRemove, onU
   );
 };
 
-export default TodoIntsert;
+export default TodoInsert;

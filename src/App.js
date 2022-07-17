@@ -1,17 +1,15 @@
 import "./App.css";
 import Nav from "./components/Nav";
-import Template from "./components/Template";
-import TodoList from "./components/TodoList";
-import { useState } from "react";
+import Template from "./components/Template/Template";
+import TodoList from "./components/TodoList/TodoList";
+import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
-import TodoIntsert from "./components/TodoInsert";
-import Weather from "./components/Weather";
+import TodoInsert from "./components/TodoInsert/TodoInsert";
+import Weather from "./components/Weather/Weather";
 
 const App = () => {
   let nextId = 4;
-  const [selectedTodo, setSelectedTodo] = useState(null);
-  const [insertToggle, setIntertToggle] = useState(false);
-  const [todos, setTodos] = useState([
+  let dummyTodo = [
     {
       id: 1,
       text: "할일 1",
@@ -27,7 +25,10 @@ const App = () => {
       text: "할일 3",
       checked: true,
     },
-  ]);
+  ];
+  const [selectedTodo, setSelectedTodo] = useState(null);
+  const [insertToggle, setIntertToggle] = useState(false);
+  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("localTodo")) || dummyTodo);
 
   // 모달 창 핸들러
   const onInsertToggle = () => {
@@ -47,10 +48,16 @@ const App = () => {
         text,
         checked: false,
       };
+
       setTodos((todos) => todos.concat(todo)); // 기존 배열 변경 방지를 위해 push가 아닌 concat 사용
       nextId++;
     }
   };
+
+  // todos의 상태가 바뀔 때 마다 저장
+  useEffect(() => {
+    localStorage.setItem("localTodo", JSON.stringify(todos));
+  }, [todos])
 
   // checkbox 핸들러
   const onCheckToggle = (id) => {
@@ -94,7 +101,7 @@ const App = () => {
       </div>
       {/* insertToggle이 true인 경우에만 나오게 */}
       {insertToggle && (
-        <TodoIntsert
+        <TodoInsert
           selectedTodo={selectedTodo}
           onRemove={onRemove}
           onUpdate={onUpdate}
