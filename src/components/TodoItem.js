@@ -2,7 +2,12 @@ import React from "react";
 import { MdCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import "./TodoItem.css";
 
-const TodoItem = ({ todo, onCheckToggle }) => {
+const TodoItem = ({
+  todo,
+  onCheckToggle,
+  onInsertToggle,
+  onChangeSelectedTodo,
+}) => {
   const { id, text, checked } = todo;
   return (
     <div className="todo-item">
@@ -12,7 +17,15 @@ const TodoItem = ({ todo, onCheckToggle }) => {
         ) : (
           <MdOutlineCheckBoxOutlineBlank onClick={() => onCheckToggle(id)} />
         )}
-        <div className="text">{text}</div>
+        <div
+          className="text"
+          onClick={() => {
+            onChangeSelectedTodo(todo); // 현재 todo 객체 전달
+            onInsertToggle();
+          }}
+        >
+          {text}
+        </div>
       </div>
     </div>
   );

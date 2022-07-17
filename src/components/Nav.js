@@ -5,7 +5,7 @@ const Nav = () => {
     <div id="nav-body">
       <span id="title">
         <img id="logo" src="" alt="logo" />
-        <span id="name">tie-up</span>
+        <div className="title">tie-U:p </div>
       </span>
       <div id="menu">
         <span>메뉴바</span>

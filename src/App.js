@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Nav from "./components/Nav";
 import Template from "./components/Template";
@@ -6,9 +5,11 @@ import TodoList from "./components/TodoList";
 import { useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import TodoIntsert from "./components/TodoInsert";
+import Weather from "./components/Weather";
 
 const App = () => {
   let nextId = 4;
+  const [selectedTodo, setSelectedTodo] = useState(null);
   const [insertToggle, setIntertToggle] = useState(false);
   const [todos, setTodos] = useState([
     {
@@ -28,10 +29,15 @@ const App = () => {
     },
   ]);
 
+  // 모달 창 핸들러
   const onInsertToggle = () => {
+    if (selectedTodo) {
+      setSelectedTodo(null); // todo 선택 후 남아있는 내용 초기화
+    }
     setIntertToggle((prev) => !prev);
   };
 
+  // Todo 입력 핸들러
   const onInsertTodo = (text) => {
     if (text === "") {
       return alert("할 일이 입력되지 않았습니다.");
@@ -46,6 +52,7 @@ const App = () => {
     }
   };
 
+  // checkbox 핸들러
   const onCheckToggle = (id) => {
     setTodos((todos) =>
       todos.map((todo) => {
@@ -54,19 +61,48 @@ const App = () => {
     );
   };
 
+  // todo 선택 핸들러
+  const onChangeSelectedTodo = (todo) => {
+    setSelectedTodo(todo);
+  };
+
+  // todo 삭제 핸들러
+  const onRemove = (id) => {
+    onInsertToggle();
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  };
+
+  // todo 수정 핸들러
+  const onUpdate = (id, text) => {
+    onInsertToggle();
+    // 해당 아이디를 가진 todo의 text를 수정
+    setTodos((todos) =>
+      todos.map((todo) => (todo.id === id ? { ...todo, text } : todo))
+    );
+  };
+
   return (
     <Template todoLength={todos.length}>
-      <TodoList todos={todos} onCheckToggle={onCheckToggle}/>
+      <TodoList
+        todos={todos}
+        onCheckToggle={onCheckToggle}
+        onInsertToggle={onInsertToggle}
+        onChangeSelectedTodo={onChangeSelectedTodo}
+      />
       <div className="add-todo-btn">
         <MdAddCircle onClick={onInsertToggle} />
       </div>
       {/* insertToggle이 true인 경우에만 나오게 */}
       {insertToggle && (
         <TodoIntsert
+          selectedTodo={selectedTodo}
+          onRemove={onRemove}
+          onUpdate={onUpdate}
           onInsertToggle={onInsertToggle}
           onInsertTodo={onInsertTodo}
         />
       )}
+      <Weather/>
     </Template>
   );
 };
